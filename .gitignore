@@ -1,0 +1,9 @@
+/target/
+Cargo.lock
+**.orig
+**~
+**.bk
+**.sw*
+bloat_log*
+itm.txt
+.gdb_history
