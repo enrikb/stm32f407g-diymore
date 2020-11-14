@@ -15,16 +15,18 @@ break rust_begin_unwind
 break main
 
 # send captured ITM to the file itm.txt
-# (the programmer's SWO pin on the STM32F4DISCOVERY is hard-wired to PB3. Make sure not to use it for a different purpose!)
+# if you have a monitor supporting SWO, connect it to PB3 to make this work
 # 168000000 is the core clock frequency
-monitor tpiu config internal itm.txt uart off 168000000
-
+# monitor tpiu config internal itm.txt uart off 168000000
 
 # OR: make the microcontroller SWO (PB3) pin output compatible with UART (8N1)
-# 8000000 is the frequency of the SWO pin
-# monitor tpiu config external uart off 8000000 2000000
+# 4000000 is the frequency of the SWO pin
+# the uart has to support a baudrate of 4Mbit/s
+# it can be configured using `stty -F <tty> 4000000`
+# higher rates typically need special setup, at least on Linux
+monitor tpiu config external uart off 168000000 4000000
 
-# # enable ITM port 1
+# enable ITM port 1
 monitor itm port 1 on
 
 load
